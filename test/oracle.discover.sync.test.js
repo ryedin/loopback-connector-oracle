@@ -11,7 +11,7 @@ before(function () {
   db = new DataSource(require('../'), config);
 });
 
-describe('discoverModelDefinitions', function () {
+describe.skip('discoverModelDefinitions', function () {
   describe('Discover models including views', function () {
     it('should return an array of tables and views', function () {
 

@@ -14,14 +14,13 @@ describe('Oracle connector', function () {
   it('should create connection pool', function (done) {
     db = new DataSource(require('../'), config);
     db.connect(function () {
-      var info = db.connector.pool.getInfo();
-      info.should.have.property('openConnections', 1);
-      info.should.have.property('busyConnections', 0);
-      info.should.have.property('maxConnections', 10);
-      info.should.have.property('minConnections', 1);
-      info.should.have.property('incrConnections', 1);
-      info.should.have.property('busyOption', 0);
-      info.should.have.property('timeout', 10);
+      var info = db.connector.pool;
+      info.should.have.property('connectionsOpen', 1);
+      info.should.have.property('connectionsInUse', 0);
+      info.should.have.property('poolMax', 10);
+      info.should.have.property('poolMin', 1);
+      info.should.have.property('poolIncrement', 1);
+      info.should.have.property('poolTimeout', 10);
       done();
     });
   });
@@ -33,14 +32,13 @@ describe('Oracle connector', function () {
     config.timeout = 5;
     db = new DataSource(require('../'), config);
     db.connect(function () {
-      var info = db.connector.pool.getInfo();
-      info.should.have.property('openConnections', 2);
-      info.should.have.property('busyConnections', 0);
-      info.should.have.property('maxConnections', 4);
-      info.should.have.property('minConnections', 2);
-      info.should.have.property('incrConnections', 2);
-      info.should.have.property('busyOption', 0);
-      info.should.have.property('timeout', 5);
+      var info = db.connector.pool;
+      info.should.have.property('connectionsOpen', 2);
+      info.should.have.property('connectionsInUse', 0);
+      info.should.have.property('poolMax', 4);
+      info.should.have.property('poolMin', 2);
+      info.should.have.property('poolIncrement', 2);
+      info.should.have.property('poolTimeout', 5);
 
       var tasks = [];
       for (var i = 0; i < 3; i++) {
@@ -48,7 +46,7 @@ describe('Oracle connector', function () {
       }
       async.parallel(tasks, function (err, connections) {
         connections.should.have.property('length', 3);
-        // var info = db.connector.pool.getInfo();
+        // var info = db.connector.pool;
         // console.log(info);
         done();
       });
