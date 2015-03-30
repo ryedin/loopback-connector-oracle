@@ -10,6 +10,10 @@ before(function () {
   config = require('rc')('loopback', {dev: {oracle: {}}}).dev.oracle;
 });
 
+after(function () {
+  db = null;
+});
+
 describe('Oracle connector', function () {
   it('should create connection pool', function (done) {
     db = new DataSource(require('../'), config);
@@ -21,6 +25,7 @@ describe('Oracle connector', function () {
       info.should.have.property('poolMin', 1);
       info.should.have.property('poolIncrement', 1);
       info.should.have.property('poolTimeout', 10);
+      db.disconnect();
       done();
     });
   });
@@ -48,7 +53,7 @@ describe('Oracle connector', function () {
         connections.should.have.property('length', 3);
         // var info = db.connector.pool;
         // console.log(info);
-        done();
+        db.disconnect(done);
       });
     });
   });
