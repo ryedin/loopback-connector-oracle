@@ -16,7 +16,7 @@
   "dependencies": {
     "async": "^0.9.0",
     "debug": "^2.1.1",
-    "loopback-connector": "^2.1.0",
+    "loopback-connector": "strongloop/loopback-connector#ceea61e93c8067e3eaa1e78f645ff740ac581bcc",
     "loopback-oracle-installer": "~1.4.0",
     "strongloop-license": "^1.0.2"
   },
